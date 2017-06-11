@@ -4,8 +4,8 @@ import spock.lang.Specification
  * Created by willpitt on 07/06/2017.
  */
 class HexelsTest extends Specification{
-    Double size, xPos, yPos, delta
-    Integer edges
+    Double size, xPos, yPos, delta, radius
+    Integer edges, width, height
     HexelBuilder hexelBuilder
 
     void setup() {
@@ -14,7 +14,10 @@ class HexelsTest extends Specification{
         yPos = 100
         delta = 0.001
         edges = 6
-        hexelBuilder = new HexelBuilder([width:1000, height:1000, radius:100])
+        width = 1000
+        height = 1000
+        radius = 100
+        hexelBuilder = new HexelBuilder([width:width, height:height, radius:radius])
     }
 
     void "all vertices are 'size' distance from centre"() {
@@ -49,11 +52,37 @@ class HexelsTest extends Specification{
         hexPoints[4][1] - hexPoints[5][1] < delta // top
     }
 
-    void ""() {
+    void "calculate number of columns fits exactly"() {
         when:
-        List hexes = hexelBuilder.createHexagons()
+        hexelBuilder.radius = 101
+        hexelBuilder.width = 961
+        Integer numberOfColumns = hexelBuilder.calculateNoOfColumns(hexelBuilder.calculateXOffset())
         then:
-        println hexes.size()
-        println hexes[0].size()
+        assert numberOfColumns == 6
+    }
+
+    void "calculate number of columns one pixel too few"() {
+        when:
+        hexelBuilder.radius = 101
+        hexelBuilder.width = 960
+        Integer numberOfColumns = hexelBuilder.calculateNoOfColumns(hexelBuilder.calculateXOffset())
+        then:
+        assert numberOfColumns == 5
+    }
+
+    void "calculate number of rows fits exactly"() {
+        when:
+        hexelBuilder.height = 954
+        Integer numberOfRows = hexelBuilder.calculateNoOfRows(hexelBuilder.calculateYOffset())
+        then:
+        assert numberOfRows == 5
+    }
+
+    void "calculate number of rows fone pixel too few"() {
+        when:
+        hexelBuilder.height = 953
+        Integer numberOfRows = hexelBuilder.calculateNoOfRows(hexelBuilder.calculateYOffset())
+        then:
+        assert numberOfRows == 4
     }
 }
