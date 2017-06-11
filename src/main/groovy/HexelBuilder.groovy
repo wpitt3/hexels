@@ -17,10 +17,8 @@ class HexelBuilder {
 
         hexagons.each{ column ->
             column.each { hexagon ->
-//                doSomethingWithHexagon(hexagon)
-
                 hexagon.each { coord ->
-                    image[(int)Math.round(coord[0])][(int)Math.round(coord[1])] = [255,0,255]
+                    image[(int)Math.round(coord[0])][(int)Math.round(coord[1])] = [255, 255, 255]
                 }
                 println " "
             }
@@ -60,51 +58,5 @@ class HexelBuilder {
                 createShape(radius, (xStart + xIndex*xOffset) + (yIndex%2==1?rowOffset:0), yStart + yIndex*yOffset, 6)
             }
         }
-    }
-
-
-
-
-    private static calculatePointFromDistanceAndAngle(Double length, Double centreX, Double centreY, Double angle) {
-
-    }
-
-    private static doSomethingWithHexagon(List hexagon) {
-        (0..4).each { pointIndex ->
-            double x1 = hexagon[pointIndex][0]
-            double x2 = hexagon[pointIndex+1][0]
-            double y1 = hexagon[pointIndex][1]
-            double y2 = hexagon[pointIndex+1][1]
-
-            int startX = findNeatestEnd(x1, x2)
-            int endX = findNeatestEnd(x2, x1)
-            int startY = findNeatestEnd(y1, y2)
-            int endY = findNeatestEnd(y2, y1)
-
-            def xDiff = x2-x1
-            def yDiff = y2-y1
-
-            println "$x1, $y1"
-            println "$x2, $y2"
-            println "$startX, $startY"
-            println "$endX, $endY"
-            println "-"
-            println xDiff
-            println xDiff/((double)(endX-startX))
-            println yDiff
-            println yDiff/((double)(endY-startY))
-            println " "
-
-            if (startX - endX != 0) {
-                println "$x1, $y1"
-                (startX..endX).each { x ->
-                    println (("$x, " + (y1+ (yDiff*(x1-x)))))
-                }
-            }
-        }
-    }
-
-    private static int findNeatestEnd(def a, def b) {
-        return Math.abs(Math.round(a) - a) < 0.001 ? Math.round(a) : ((a > b) ? Math.floor(a) : Math.ceil(a))
     }
 }
