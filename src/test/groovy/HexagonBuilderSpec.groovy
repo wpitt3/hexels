@@ -84,4 +84,23 @@ class HexagonBuilderSpec extends Specification{
         then:
         assert numberOfRows == 4
     }
+
+    void "create 2*2 grid"() {
+        when:
+        hexagonBuilder.width = 500
+        hexagonBuilder.height = 500
+        List hexagons = hexagonBuilder.createHexagons()
+        then:
+        pointsAreEqual(hexagons[0][0][0], hexagons[1][0][4])
+        pointsAreEqual(hexagons[0][0][1], hexagons[1][0][3]) && pointsAreEqual(hexagons[0][0][1], hexagons[0][1][5])
+        pointsAreEqual(hexagons[0][0][2], hexagons[0][1][4])
+
+        pointsAreEqual(hexagons[1][1][3], hexagons[0][1][1])
+        pointsAreEqual(hexagons[1][1][4], hexagons[0][1][0]) && pointsAreEqual(hexagons[1][1][4], hexagons[1][0][2])
+        pointsAreEqual(hexagons[1][1][5], hexagons[1][0][1])
+    }
+
+    private Boolean pointsAreEqual(List point1, List point2) {
+        return (0..1).every{Math.abs(point1[it] - point2[it]) < delta}
+    }
 }
