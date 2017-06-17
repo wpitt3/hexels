@@ -89,7 +89,7 @@ class HexagonBuilderSpec extends Specification{
         when:
         hexagonBuilder.width = 500
         hexagonBuilder.height = 500
-        List hexagons = hexagonBuilder.createHexagons()
+        List hexagons = hexagonBuilder.calculateHexagons(hexagonBuilder.calculateHexagonCentres())
         then:
         pointsAreEqual(hexagons[0][0][0], hexagons[1][0][4])
         pointsAreEqual(hexagons[0][0][1], hexagons[1][0][3]) && pointsAreEqual(hexagons[0][0][1], hexagons[0][1][5])

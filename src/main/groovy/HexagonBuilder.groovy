@@ -11,7 +11,7 @@ class HexagonBuilder {
         this.radius = radius
     }
 
-    List createHexagons() {
+    List calculateHexagonCentres() {
         double xOffset = xOffset()
         double yOffset = yOffset()
 
@@ -23,9 +23,15 @@ class HexagonBuilder {
 
         return (0..<xSize).collect{ xIndex ->
             (0..<ySize).collect { yIndex ->
-                createShape((xStart + xIndex*xOffset), yStart + yIndex*yOffset*2 + (xIndex%2==1?yOffset:0) , 6)
+                return [(xStart + xIndex*xOffset), (yStart + yIndex*yOffset*2 + (xIndex%2==1?yOffset:0))]
             }
         }
+    }
+
+    List calculateHexagons(List centres) {
+        return centres.collect{column -> column.collect{centre ->
+            createShape(centre[0], centre[1], 6)
+        }}
     }
 
     private Double xOffset() {
@@ -44,7 +50,7 @@ class HexagonBuilder {
         return Math.ceil((height - 1 - yOffset * 3) / (yOffset*2))
     }
 
-    private List createShape(Double centreX, Double centreY, Integer edges) {
+    List createShape(Double centreX, Double centreY, Integer edges) {
         double angle = Math.toRadians(360/edges)
         (0..<edges).collect { Integer deg ->
             [centreX + Math.cos(angle*deg) * radius, centreY + Math.sin(angle*deg) * radius ]
