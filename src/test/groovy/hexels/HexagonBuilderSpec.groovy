@@ -1,3 +1,5 @@
+package hexels
+
 import spock.lang.Specification
 
 /**
@@ -6,7 +8,7 @@ import spock.lang.Specification
 class HexagonBuilderSpec extends Specification{
     Double xPos, yPos, delta, radius
     Integer edges, width, height
-    HexagonBuilder hexagonBuilder
+    hexels.HexagonBuilder hexagonBuilder
 
     void setup() {
         xPos = 100
@@ -16,7 +18,7 @@ class HexagonBuilderSpec extends Specification{
         width = 1000
         height = 1000
         radius = 100
-        hexagonBuilder = new HexagonBuilder(width, height, radius)
+        hexagonBuilder = new hexels.HexagonBuilder(width, height, radius)
     }
 
     void "all vertices are 'size' distance from centre"() {

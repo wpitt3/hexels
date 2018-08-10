@@ -1,3 +1,4 @@
+package hexels
 /**
  * Created by willpitt on 20/01/2017.
  */
@@ -57,9 +58,9 @@ class HexelBuilder {
         (0..<width).each { x ->
             (0..<height).each { y ->
                 if (hexagons[x][y] >= 0) {
-                    image[x][y][0] = hexColour[hexagons[x][y]][2]
+                    image[x][y][0] = hexColour[hexagons[x][y]][0]
                     image[x][y][1] = hexColour[hexagons[x][y]][1]
-                    image[x][y][2] = hexColour[hexagons[x][y]][0]
+                    image[x][y][2] = hexColour[hexagons[x][y]][2]
                 }
             }
         }
