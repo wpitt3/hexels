@@ -57,7 +57,6 @@ class HexelBuilder {
         (0..<width).each { x ->
             (0..<height).each { y ->
                 if (hexagons[x][y] >= 0) {
-//                    println hexagons[x][y]
                     image[x][y][0] = hexColour[hexagons[x][y]][2]
                     image[x][y][1] = hexColour[hexagons[x][y]][1]
                     image[x][y][2] = hexColour[hexagons[x][y]][0]

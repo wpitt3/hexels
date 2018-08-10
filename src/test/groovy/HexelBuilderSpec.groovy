@@ -24,7 +24,6 @@ class HexelBuilderSpec extends Specification{
             hexagonIndexes != null
             8 == hexagonIndexes.collect{ it.max() }.max()
             hexagonIndexes.each{ column -> column.findAll{ it >= 0 }.each{ hexFrequencies[it]++}}
-            println hexFrequencies
             (5..45).every { x ->
                 (9..51).every { y ->
                     hexagonIndexes[x][y] != -1
