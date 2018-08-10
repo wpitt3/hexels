@@ -20,7 +20,6 @@ class HexelBuilderSpec extends Specification{
         when:
             List hexagonIndexes = hexelBuilder.createHexagonsIndexes()
             List hexFrequencies = (0..8).collect{0}
-
         then:
             hexagonIndexes != null
             8 == hexagonIndexes.collect{ it.max() }.max()
@@ -31,7 +30,20 @@ class HexelBuilderSpec extends Specification{
                     hexagonIndexes[x][y] != -1
                 }
             }
+    }
 
+    void "find points inside hexagon"() {
+        when :
+            List hexagon = [[20, 9], [15, 17], [5, 17], [0, 9], [5, 0], [15, 0]]
+            List hexagonCentre = [10.0, 8.660254037844386]
+            List result = [0, 2, 3, 5].collect { pointIndex ->
+                hexelBuilder.findAllPointsCloserToCentreThanLine(hexagon[pointIndex], hexagon[(pointIndex + 1) % 6], hexagonCentre)
+            }
+        then:
+            result[0] == [19:[9, 10], 18:[9, 10, 11, 12], 17:[9, 10, 11, 12, 13], 16:[9, 10, 11, 12, 13, 14, 15], 15:[9, 10, 11, 12, 13, 14, 15, 16]]
+            result[1] == [5:[16, 15, 14, 13, 12, 11, 10, 9], 4:[15, 14, 13, 12, 11, 10, 9], 3:[13, 12, 11, 10, 9], 2:[12, 11, 10, 9], 1:[10, 9]]
+            result[2] == [1:[9, 8], 2:[9, 8, 7, 6], 3:[9, 8, 7, 6, 5, 4], 4:[9, 8, 7, 6, 5, 4, 3, 2], 5:[9, 8, 7, 6, 5, 4, 3, 2, 1]]
+            result[3] == [15:[1, 2, 3, 4, 5, 6, 7, 8, 9], 16:[2, 3, 4, 5, 6, 7, 8, 9], 17:[4, 5, 6, 7, 8, 9], 18:[6, 7, 8, 9], 19:[8, 9]]
     }
 
     private Boolean pointsAreEqual(List point1, List point2) {
