@@ -6,6 +6,6 @@ install gradle 4.1
 run `gradle build`
 
 ## To run
-java -jar build/libs/hexels-1.0-SNAPSHOT.jar *imageInPath* *imageOutPath* *size(optional [0-9])*
+java -jar build/libs/hexels-1.0-SNAPSHOT.jar *imageInPath* *imageOutPath* *size(optional even and > 0)*
 
 

@@ -5,33 +5,54 @@ import spock.lang.Specification
 /**
  * Created by willpitt on 07/06/2017.
  */
-class HexelBuilderSpec extends Specification{
-    Double delta, radius
-    Integer width, height
-    hexels.HexelBuilder hexelBuilder
+class HexelBuilderSpec extends Specification {
+  Double delta, radius
+  Integer width, height
+  HexelBuilder hexelBuilder
 
-    void setup() {
-        delta = 0.001
-        width = 55
-        height = 70
-        radius = 10
-        hexelBuilder = new hexels.HexelBuilder(width, height, radius)
-    }
+  void setup() {
+    delta = 0.001
+    width = 55
+    height = 70
+    radius = 10
+    hexelBuilder = new HexelBuilder(width, height, radius)
+  }
 
-    void "all vertices are 'size' distance from centre"() {
-        when:
-            List hexagonIndexes = hexelBuilder.createHexagonsIndexes()
-            List hexFrequencies = (0..8).collect{0}
-        then:
-            hexagonIndexes != null
-            8 == hexagonIndexes.collect{ it.max() }.max()
-            hexagonIndexes.each{ column -> column.findAll{ it >= 0 }.each{ hexFrequencies[it]++}}
-            (5..45).every { x ->
-                (9..51).every { y ->
-                    hexagonIndexes[x][y] != -1
-                }
-            }
-    }
+  void "all vertices are 'size' distance from centre"() {
+    when:
+      List hexagonIndexes = hexelBuilder.createHexagonsIndexes()
+      List hexFrequencies = (0..8).collect { 0 }
+    then:
+      hexagonIndexes != null
+      8 == hexagonIndexes.collect { it.max() }.max()
+      hexagonIndexes.each { column -> column.findAll { it >= 0 }.each { hexFrequencies[it]++ } }
+      (5..45).every { x ->
+        (9..51).every { y ->
+          hexagonIndexes[x][y] != -1
+        }
+      }
+  }
+
+//  void "properly tesalate"() {
+//    given:
+//      HexelBuilder hexelBuilder = new HexelBuilder(44, 55, 12)
+//
+//    when:
+//      List hexagons = hexelBuilder.createHexagonsIndexes()
+//
+//    then:
+//      (0..<hexagons[0].size()).collect{ y ->
+//        (0..<hexagons.size()).collect { x ->
+//           hexagons[x][y] + 1
+//        }
+//      }.each {
+//        println it
+//      }
+//    // 21, 26
+//    //[24, 31]
+//    //[18, 21]
+//      true
+//  }
 
 //    void "find points inside hexagon"() {
 //        when :
@@ -47,7 +68,7 @@ class HexelBuilderSpec extends Specification{
 //            result[3] == [15:[1, 2, 3, 4, 5, 6, 7, 8, 9], 16:[2, 3, 4, 5, 6, 7, 8, 9], 17:[4, 5, 6, 7, 8, 9], 18:[6, 7, 8, 9], 19:[8, 9]]
 //    }
 
-    private Boolean pointsAreEqual(List point1, List point2) {
-        return (0..1).every{Math.abs(point1[it] - point2[it]) < delta}
-    }
+  private Boolean pointsAreEqual(List point1, List point2) {
+    return (0..1).every { Math.abs(point1[it] - point2[it]) < delta }
+  }
 }
