@@ -15,12 +15,11 @@ class HexelBuilder {
   }
 
   List createHexagonsIndexes() {
-
     List hexagons = (0..<width).collect { x -> (0..<height).collect { y -> -1 } }
     List hexagonCentres = hexagonBuilder.calculateHexagonCentres()
     hexagonCentres.eachWithIndex { column, xIndex ->
       column.eachWithIndex { hexagonCentre, yIndex ->
-        Integer hexIndex = hexagonCentres.size() * xIndex + yIndex
+        Integer hexIndex = hexagonCentres[0].size() * xIndex + yIndex
         List hexagon = hexagonBuilder.createShape(hexagonCentre[0], hexagonCentre[1], 6)
             .collect { point -> point.collect { (int) Math.round(it) } }
         [0, 2, 3, 5].each { pointIndex ->
